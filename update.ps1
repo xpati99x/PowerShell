@@ -1,30 +1,10 @@
-﻿function Save-GitHubRepository
-{
-    param(
-        [Parameter(Mandatory)]
-        [string]$Owner,
-
-        [Parameter(Mandatory)]
-        [string]$Repository,
-
-        [Parameter(Mandatory)]
-        [string]$Branch,
-
-        [Parameter()]
-        [string]$DestinationPath
-    )
-
-    $url = "https://github.com/$Owner/$Project/archive/$Branch.zip"
-    $start_time = Get-Date
-
-    $wc = New-Object System.Net.WebClient
-    $wc.DownloadFile($url, ($DestinationPath + "\download.zip"))
-
-    Write-Host "Time taken: $((Get-Date).Subtract($start_time).TotalSeconds) second(s)" 
-}
-
-$Downloadpfad = (Get-Location)
-
-Save-GitHubRepository xpati99x PowerShell master $Downloadpfad
-
-pause
+﻿$Url = 'https://github.com/xpati99x/Effzett-Installation/archive/master.zip' 
+$ZipFile = 'C:\tmp\' + $(Split-Path -Path $Url -Leaf) 
+$Destination= 'C:\EffzettInstall\' 
+ 
+Invoke-WebRequest -Uri $Url -OutFile $ZipFile 
+ 
+$ExtractShell = New-Object -ComObject Shell.Application 
+$Files = $ExtractShell.Namespace($ZipFile).Items() 
+$ExtractShell.NameSpace($Destination).CopyHere($Files) 
+Start-Process $Destination
