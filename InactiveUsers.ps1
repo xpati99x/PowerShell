@@ -1,0 +1,1 @@
+﻿Search-ADAccount -UsersOnly -AccountInactive -TimeSpan 120:0:0:0 | Out-GridView #Anzahl der Tage vor dem ersten Doppelpunkt danach Stunden:Minuten:Sekunden
