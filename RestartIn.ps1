@@ -3,8 +3,8 @@
 $timeuntilRestart = ($timeinHours*3600)+($timeinMinutes*60)
 $restartTimestamp = (Get-Date).AddSeconds($timeuntilRestart)#Timestamp
 shutdown -r -t $timeuntilRestart
-echo "Der Computer wird am" $restartTimestamp "neugestartet."
-[String]$AbbruchVar = Read-Host -Prompt 'Abbrechen? [X] || Irgendeine Taste zum schließen'
+Write-Output "Der Computer wird am" $restartTimestamp "neugestartet."
+[String]$AbbruchVar = Read-Host -Prompt 'Abbrechen? [X] || Beliebige Taste zum schließen'
 if ($AbbruchVar -eq "X")
 {
     shutdown -a
