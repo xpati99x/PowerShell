@@ -13,4 +13,4 @@ if ($AbbruchVar -eq "X")
 else
 {
     exit
-}    
+}
