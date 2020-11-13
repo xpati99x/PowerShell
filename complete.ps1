@@ -20,6 +20,7 @@ function getExcel {
     $excel = New-Object -comobject Excel.Application  
 
     #open file 
+<<<<<<< HEAD
     $FilePath = 'C:\cont\required\Makro.xlsm' 
     $workbook = $excel.Workbooks.Open($FilePath)
 
@@ -27,6 +28,21 @@ function getExcel {
     $app = $excel.Application
     $app.Run("TelefonDatShit") 
     $excel.Quit() 
+=======
+    $FilePath = 'C:\cont\required\Makro.xlsm' #<------- Change this!!! 
+    $workbook = $excel.Workbooks.Open($FilePath)  
+
+    #access the Application object and run a macro $app = $excel.Application 
+    $excel.Application.Run("TelefonDatShit") #<------- Change this!!! 
+    $excel.Quit()     
+
+    #Popup box to show completion - you would remove this if using task scheduler 
+    $wshell = New-Object -ComObject Wscript.Shell $wshell.Popup("Operation Completed",0,"Done",0x1)  
+}
+
+function convExToCSV {
+    
+>>>>>>> eb62c6b4196c17fe5c95ebb7d276310011c3baba
 }
 
 function xlsxToCSV {
@@ -58,7 +74,6 @@ function split {
     [gc]::WaitForPendingFinalizers()
 }
 
-
 function addtopline {
     #Delete the topline in the first file to avoid a duplicate
     $firstfile = "$filePath\split_out\splitcsv1.csv"
@@ -81,12 +96,18 @@ function addtopline {
     }
 }
 
+<<<<<<< HEAD
 #Exceldatei abholen und auf Beendigung warten
 getExcel
 Get-Job | Wait-Job
 #Exceldatei in benötigte CSV umwandeln und auf Beendigung warten
 #xlsxToCSV
 #Get-Job | Wait-Job
+=======
+#Exceldatei erzeugen und auf Beendigung warten
+getExcel
+Get-Job | Wait-Job
+>>>>>>> eb62c6b4196c17fe5c95ebb7d276310011c3baba
 #Dateien aufteilen und auf Beendigung warten
 split
 Get-Job | Wait-Job
