@@ -3,6 +3,7 @@
 $sourcefilename = "C:\cont\in\main.csv"
 #Ausgangsverzeichnis
 $filePath = "C:\cont"
+Set-Location $filePath
 
 #SPLIT PART
 # Set counters and length for the splitting of the files
@@ -19,12 +20,27 @@ function getExcel {
     $excel = New-Object -comobject Excel.Application  
 
     #open file 
-    $FilePath = 'C:\cont\required\Makro.xlsm' #<------- Change this!!! 
-    $workbook = $excel.Workbooks.Open($FilePath) 
+    $FilePath = 'C:\cont\required\Makro.xlsm' 
+    $workbook = $excel.Workbooks.Open($FilePath)
 
-    #access the Application object and run a macro $app = $excel.Application 
-    $app.Run("TelefonDatShit") #<------- Change this!!! 
+    #access the Application object and run a app
+    $app = $excel.Application
+    $app.Run("TelefonDatShit") 
     $excel.Quit() 
+}
+
+function xlsxToCSV {
+    # start Excel 
+    $excel = New-Object -comobject Excel.Application  
+
+    #open file 
+    $FilePath = 'C:\cont\required\toCSV.xlsm' 
+    $workbook = $excel.Workbooks.Open($FilePath)
+
+    #access the Application object and run a app
+    $app = $excel.Application
+    $app.Run("toCSV.xlsm!Modul1.toCSV") 
+    $excel.Quit()
 }
 
 function split {
@@ -60,15 +76,19 @@ function addtopline {
         $Output += $topline
         #Append old text from content
         $Output += $content
-        Set-Location "$filePath\topline_out\"
+        Set-Location $filePath\topline_out\
         $Output | Out-File -FilePath .\$outfile
     }
 }
 
-
-#Dateien aufteilen
+#Exceldatei abholen und auf Beendigung warten
+getExcel
+Get-Job | Wait-Job
+#Exceldatei in benötigte CSV umwandeln und auf Beendigung warten
+#xlsxToCSV
+#Get-Job | Wait-Job
+#Dateien aufteilen und auf Beendigung warten
 split
-#Auf Beendigung warten
 Get-Job | Wait-Job
 #Kopfzeile hinzufügen
 addtopline
