@@ -20,11 +20,8 @@ function getExcel {
 
     #open file 
     $FilePath = 'C:\cont\required\Makro.xlsm' #<------- Change this!!! 
-    $workbook = $excel.Workbooks.Open($FilePath) 
 
     #access the Application object and run a macro $app = $excel.Application 
-    $app.Run("TelefonDatShit") #<------- Change this!!! 
-    $excel.Quit() 
 }
 
 function split {
@@ -41,7 +38,6 @@ function split {
     [gc]::collect() 
     [gc]::WaitForPendingFinalizers()
 }
-
 
 function addtopline {
     #Delete the topline in the first file to avoid a duplicate
@@ -65,10 +61,7 @@ function addtopline {
     }
 }
 
-
-#Dateien aufteilen
 split
-#Auf Beendigung warten
 Get-Job | Wait-Job
 #Kopfzeile hinzufügen
 addtopline
